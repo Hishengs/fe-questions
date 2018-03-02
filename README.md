@@ -5,13 +5,76 @@ typical javascript quetions
 
 **Q1 JS 有哪些数据类型？如何分类？**
 
+原始（基本）数据类型：Null, Undefined, String, Number, Boolean
+
+引用数据类型：Object, Array, Date, Function...
+
 
 
 **Q2** **如何判断变量具体的数据类型？**
 
+1. 使用 typeof
+
+   typeof 用于判断变量基本类型，无法准确判断具体的数据类型。例如：
+
+   ```js
+   console.log(typeof 12); // number
+   console.log(typeof 'hello'); // string
+   console.log(typeof true); // boolean
+   console.log(typeof {}); // object
+   console.log(typeof []); // object
+   console.log(typeof (function(){})); // function
+   console.log(typeof (new Date())); // object
+   ```
+
+   可见，对于引用数据类型，并无法准确地判断
+
+2. 使用 instanceof
+
+   a instanceof b 用于判断对象a是否构造函数b实例化而来，可用于判断大部分引用数据类型。
+
+   ```js
+   {} instanceof Object // true
+   [] instanceof Array // true
+   (function(){}) instanceof Function // true
+   (new Date()) instanceof Date // true
+   // 局限性
+   [] instanceof Object // true
+   (function(){}) instanceof Object // true
+   ```
+
+   局限性在于，其他引用数据类型的构造函数都是由 Object 继承而来，所以仍然无法准确判断。
+
+3. 使用 `Object.prototype.toString.call(x)`
+
+   该方法可以得到变量内置的数据类型字符串，如：
+
+   ```js
+   Object.prototype.toString.call(12); 		// "[object Number]"
+   Object.prototype.toString.call('hello'); 	// "[object String]"
+   Object.prototype.toString.call(null); 		// "[object Null]"
+   Object.prototype.toString.call(undefined);  // "[object Undefined]"
+   Object.prototype.toString.call(true);  		// "[object Boolean]"
+   Object.prototype.toString.call({}); 		// "[object Object]"
+   Object.prototype.toString.call([]); 		// "[object Array]"
+   ```
+
+   可以进一步改进此方法
+
+   ```js
+   Object.prototype.toString.call(12).slice(8, -1).toLowerCase(); // number
+   ```
+
+
+
 
 
 **Q3** **常见的作用域有哪几种？**
+
+1. 全局作用域
+2. 局部作用域
+   * 函数作用域
+   * 块作用域
 
 
 
